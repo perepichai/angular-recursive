@@ -206,6 +206,7 @@ export class AppComponent implements OnInit {
   }
 
   walkThroughArray(arr: string | any[]) {
+    
     const ul = this.renderer.createElement('ul');
 
     for (let i=0; i<arr.length; i++) {
@@ -216,8 +217,10 @@ export class AppComponent implements OnInit {
       if (arr[i].children.length) {
         this.renderer.appendChild(li, this.walkThroughArray(arr[i].children));        
       }
+
       this.renderer.appendChild(ul, li);
     }
+
     this.renderer.appendChild(this.el.nativeElement, ul);
     return ul;
 }
