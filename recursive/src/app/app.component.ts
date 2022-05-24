@@ -3,11 +3,11 @@ import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'recursive';
-  arr = [
+  items = [
     {
       id: 1,
       name: 'test1',
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
                 {
                   id: 4,
                   name: 'test4',
-                  children: []
+                  children: [],
                 },
                 {
                   id: 4,
@@ -44,11 +44,11 @@ export class AppComponent implements OnInit {
                                 {
                                   id: 4,
                                   name: 'test4',
-                                  children: []
-                                }
-                              ]
-                            }
-                          ]
+                                  children: [],
+                                },
+                              ],
+                            },
+                          ],
                         },
                         {
                           id: 4,
@@ -69,25 +69,25 @@ export class AppComponent implements OnInit {
                                         {
                                           id: 4,
                                           name: 'test4',
-                                          children: []
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                                          children: [],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       id: 1,
@@ -120,15 +120,15 @@ export class AppComponent implements OnInit {
                                 {
                                   id: 4,
                                   name: 'test4',
-                                  children: []
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
+                                  children: [],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 {
                   id: 4,
@@ -149,11 +149,11 @@ export class AppComponent implements OnInit {
                                 {
                                   id: 4,
                                   name: 'test4',
-                                  children: []
-                                }
-                              ]
-                            }
-                          ]
+                                  children: [],
+                                },
+                              ],
+                            },
+                          ],
                         },
                         {
                           id: 4,
@@ -174,48 +174,44 @@ export class AppComponent implements OnInit {
                                         {
                                           id: 4,
                                           name: 'test4',
-                                          children: []
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+                                          children: [],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ];
 
-  constructor (
-    private renderer: Renderer2,
-    private el: ElementRef
-    ) {}
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
 
-  ngOnInit(): void {
-    this.walkThroughArray(this.arr);
-  }
+  ngOnInit(): void { }
 
   walkThroughArray(arr: string | any[]) {
-    
     const ul = this.renderer.createElement('ul');
 
-    for (let i=0; i<arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       const li = this.renderer.createElement('li');
-      const text = this.renderer.createText(`ID: ${arr[i].id}; Name: ${arr[i].name}`);
+      const text = this.renderer.createText(
+        `ID: ${arr[i].id}; Name: ${arr[i].name}`
+      );
       this.renderer.appendChild(li, text);
 
       if (arr[i].children.length) {
-        this.renderer.appendChild(li, this.walkThroughArray(arr[i].children));        
+        this.renderer.appendChild(li, this.walkThroughArray(arr[i].children));
       }
 
       this.renderer.appendChild(ul, li);
@@ -223,7 +219,10 @@ export class AppComponent implements OnInit {
 
     this.renderer.appendChild(this.el.nativeElement, ul);
     return ul;
-}
+  }
 
+  onClick(event: Event, item: object): void {
+    event.stopPropagation();
+    console.log(item);
+  }
 }
-
